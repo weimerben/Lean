@@ -221,7 +221,8 @@ namespace QuantConnect.Lean.Engine
                     {
                         //Sample the portfolio value over time for chart.
                         results.SampleEquity(_previousTime, Math.Round(algorithm.Portfolio.TotalPortfolioValue, 4));
-
+                        
+                        
                         //Check for divide by zero
                         if (startingPortfolioValue == 0m)
                         {
@@ -234,6 +235,7 @@ namespace QuantConnect.Lean.Engine
                         startingPortfolioValue = algorithm.Portfolio.TotalPortfolioValue;
                     }
                 }
+                
 
                 //Update algorithm state after capturing performance from previous day
 
@@ -246,6 +248,14 @@ namespace QuantConnect.Lean.Engine
 
                 //Update the securities properties: first before calling user code to avoid issues with data
                 algorithm.Securities.Update(time, newData);
+
+                if (!backtestMode)
+                {
+                    results.SampleBenchmark(time, algorithm.Benchmark(time));
+                }else if (_previousTime.Date != time.Date)
+                {
+                    results.SampleBenchmark(time, algorithm.Benchmark(time));
+                }
 
                 // process fill models on the updated data before entering algorithm, applies to all non-market orders
                 transactions.ProcessSynchronousEvents();

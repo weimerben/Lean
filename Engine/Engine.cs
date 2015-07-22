@@ -350,7 +350,8 @@ namespace QuantConnect.Lean.Engine
                                 var performance = charts[strategyEquityKey].Series[dailyPerformanceKey].Values;
                                 var profitLoss =
                                     new SortedDictionary<DateTime, decimal>(algorithm.Transactions.TransactionRecord);
-                                statistics = Statistics.Statistics.Generate(equity, profitLoss, performance,
+                                var Benchmark = charts["Benchmark"].Series["Benchmark"].Values.ToDictionary(chartPoint=>Time.UnixTimeStampToDateTime(chartPoint.x),chartPoint => chartPoint.y);
+                                statistics = Statistics.Statistics.Generate(equity, profitLoss, performance,Benchmark,
                                     _algorithmHandlers.Setup.StartingPortfolioValue, algorithm.Portfolio.TotalFees, algorithm.Transactions.OrdersCount, 252);
                             }
                         }

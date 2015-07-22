@@ -258,6 +258,11 @@ namespace QuantConnect.Lean.Engine.Results
         }
 
 
+        public void SampleBenchmark(DateTime time, decimal value)
+        {
+            Sample("Benchmark", ChartType.Stacked, "Benchmark", SeriesType.Bar, time, value, "%");
+        }
+
         /// <summary>
         /// Analyse the algorithm and determine its security types.
         /// </summary>

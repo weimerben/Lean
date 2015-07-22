@@ -32,6 +32,7 @@ namespace QuantConnect.Algorithm.CSharp
             SetCash(100000);             //Set Strategy Cash
             // Find more symbols here: http://quantconnect.com/data
             AddSecurity(SecurityType.Equity, "SPY", Resolution.Second);
+            SetBenchmark("IBM");
         }
 
         /// <summary>

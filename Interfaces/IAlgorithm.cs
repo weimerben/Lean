@@ -190,6 +190,13 @@ namespace QuantConnect.Interfaces
             get;
         }
 
+
+
+        Func<DateTime, decimal> Benchmark
+        { 
+            get;
+        }
+
         /// <summary>
         /// Initialise the Algorithm and Prepare Required Data:
         /// </summary>

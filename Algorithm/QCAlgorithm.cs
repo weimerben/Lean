@@ -539,6 +539,31 @@ namespace QuantConnect.Algorithm
 
 
         /// <summary>
+        /// Set Benchmark
+        /// </summary>
+        /// <param name="startingCash">Starting cash for the strategy backtest</param>
+        /// <remarks>Alias of SetCash(decimal)</remarks>
+        /// 
+        public void SetBenchmark(String Symbol)
+        {
+            var resolution = LiveMode ? Resolution.Second : Resolution.Daily;
+            AddSecurity(SecurityType.Equity, Symbol, resolution);
+
+            Benchmark = dateTime =>
+            {
+                return Securities[Symbol].Price;
+            };
+        }
+
+
+        public Func<DateTime, decimal> Benchmark
+        {
+            get;
+            private set;
+        }
+
+   
+        /// <summary>
         /// Set initial cash for the strategy while backtesting. During live mode this value is ignored 
         /// and replaced with the actual cash of your brokerage account.
         /// </summary>

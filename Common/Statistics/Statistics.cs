@@ -36,7 +36,7 @@ namespace QuantConnect.Statistics
         /// <summary>
         /// Retrieve a static S-P500 Benchmark for the statistics calculations. Update the benchmark once per day.
         /// </summary>
-        public static SortedDictionary<DateTime, decimal> Benchmark
+        public static SortedDictionary<DateTime, decimal> YahooBenchmark
         {
             get
             {
@@ -111,7 +111,7 @@ namespace QuantConnect.Statistics
         /// <param name="totalOrders">Total number of orders processed.</param>
         /// <param name="tradingDaysPerYear">Number of trading days per year</param>
         /// <returns>Statistics Array, Broken into Annual Periods</returns>
-        public static Dictionary<string, string> Generate(IEnumerable<ChartPoint> pointsEquity, SortedDictionary<DateTime, decimal> profitLoss, IEnumerable<ChartPoint> pointsPerformance, decimal startingCash, decimal totalFees, decimal totalOrders, double tradingDaysPerYear = 252)
+        public static Dictionary<string, string> Generate(IEnumerable<ChartPoint> pointsEquity, SortedDictionary<DateTime, decimal> profitLoss, IEnumerable<ChartPoint> pointsPerformance, Dictionary<DateTime, decimal> UnsortedBenchmark, decimal startingCash, decimal totalFees, decimal totalOrders, double tradingDaysPerYear = 252)
         {
             //Initialise the response:
             double riskFreeRate = 0;
@@ -143,14 +143,14 @@ namespace QuantConnect.Statistics
             var listBenchmark = new List<double>();
             var equity = new SortedDictionary<DateTime, decimal>();
             var performance = new SortedDictionary<DateTime, decimal>();
-
+            SortedDictionary<DateTime, decimal>  Benchmark = null;
             try
             {
                 //Get array versions of the performance:
                 performance = ChartPointToDictionary(pointsPerformance);
                 equity = ChartPointToDictionary(pointsEquity);
                 performance.Values.ToList().ForEach(i => listPerformance.Add((double)(i / 100)));
-
+                Benchmark = YahooBenchmark; // new SortedDictionary<DateTime, decimal>(UnsortedBenchmark);
                 //Get benchmark performance array for same period:
                 Benchmark.Keys.ToList().ForEach(dt =>
                 {

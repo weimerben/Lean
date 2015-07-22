@@ -673,6 +673,11 @@ namespace QuantConnect.Lean.Engine.Results
             //Sample("Strategy Equity", ChartType.Overlay, "Daily Performance", SeriesType.Line, time, value, "%");
         }
 
+        public void SampleBenchmark(DateTime time, decimal value)
+        {
+            Sample("Benchmark", ChartType.Stacked, "Benchmark", SeriesType.Bar, time, value, "%");
+        }
+
         /// <summary>
         /// Add a range of samples from the users algorithms to the end of our current list.
         /// </summary>
