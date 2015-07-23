@@ -106,6 +106,7 @@ namespace QuantConnect.Statistics
         /// <param name="pointsEquity">Equity value over time.</param>
         /// <param name="profitLoss">profit loss from trades</param>
         /// <param name="pointsPerformance"> Daily performance</param>
+        /// <param name="UnsortedBenchmark"> Benchmark data as dictionary. Data does not need to be ordered</param>
         /// <param name="startingCash">Amount of starting cash in USD </param>
         /// <param name="totalFees">The total fees incurred over the life time of the algorithm</param>
         /// <param name="totalOrders">Total number of orders processed.</param>
