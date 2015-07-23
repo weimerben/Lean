@@ -36,7 +36,7 @@ namespace QuantConnect.Statistics
         /// <summary>
         /// Retrieve a static S-P500 Benchmark for the statistics calculations. Update the benchmark once per day.
         /// </summary>
-        public static SortedDictionary<DateTime, decimal> YahooBenchmark
+        public static SortedDictionary<DateTime, decimal> YahooSPYBenchmark
         {
             get
             {
@@ -150,7 +150,7 @@ namespace QuantConnect.Statistics
                 performance = ChartPointToDictionary(pointsPerformance);
                 equity = ChartPointToDictionary(pointsEquity);
                 performance.Values.ToList().ForEach(i => listPerformance.Add((double)(i / 100)));
-                Benchmark = YahooBenchmark; // new SortedDictionary<DateTime, decimal>(UnsortedBenchmark);
+                Benchmark = new SortedDictionary<DateTime, decimal>(UnsortedBenchmark);
                 //Get benchmark performance array for same period:
                 Benchmark.Keys.ToList().ForEach(dt =>
                 {
