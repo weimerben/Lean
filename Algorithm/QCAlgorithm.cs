@@ -541,13 +541,14 @@ namespace QuantConnect.Algorithm
         /// <summary>
         /// Set Benchmark
         /// </summary>
-        /// <param name="startingCash">Starting cash for the strategy backtest</param>
-        /// <remarks>Alias of SetCash(decimal)</remarks>
+        /// <param name="Symbol">Symbol to use as the benchmark</param>
+        /// <param name="SecurityType">Is the symbol an equity, option, forex, etc. Default SecurityType.Equity</param>
+        /// <remarks>Must use symbol that is available to the trade engine in your data store(not strictly enforced)</remarks>
         /// 
-        public void SetBenchmark(String Symbol)
+        public void SetBenchmark(String Symbol, SecurityType SecurityType = SecurityType.Equity)
         {
             var resolution = LiveMode ? Resolution.Second : Resolution.Daily;
-            AddSecurity(SecurityType.Equity, Symbol, resolution);
+            AddSecurity(SecurityType, Symbol, resolution);
 
             Benchmark = dateTime =>
             {
@@ -555,7 +556,11 @@ namespace QuantConnect.Algorithm
             };
         }
 
-
+        /// <summary>
+        /// Benchmark
+        /// </summary>
+        /// <remarks>Use Benchmark to override default symbol based benchmark, and create your own benchmark. For example a custom moving average benchmark </remarks>
+        /// 
         public Func<DateTime, decimal> Benchmark
         {
             get;
