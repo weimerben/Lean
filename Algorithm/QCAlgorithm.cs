@@ -541,20 +541,33 @@ namespace QuantConnect.Algorithm
         /// <summary>
         /// Set Benchmark
         /// </summary>
-        /// <param name="Symbol">Symbol to use as the benchmark</param>
-        /// <param name="SecurityType">Is the symbol an equity, option, forex, etc. Default SecurityType.Equity</param>
+        /// <param name="symbol">symbol to use as the benchmark</param>
+        /// <param name="securityType">Is the symbol an equity, option, forex, etc. Default SecurityType.Equity</param>
         /// <remarks>Must use symbol that is available to the trade engine in your data store(not strictly enforced)</remarks>
         /// 
-        public void SetBenchmark(String Symbol, SecurityType SecurityType = SecurityType.Equity)
+        public void SetBenchmark(SecurityType securityType, String symbol)
         {
             var resolution = LiveMode ? Resolution.Second : Resolution.Daily;
-            AddSecurity(SecurityType, Symbol, resolution);
+            AddSecurity(securityType, symbol, resolution);
 
             Benchmark = dateTime =>
             {
-                return Securities[Symbol].Price;
+                return Securities[symbol].Price;
             };
         }
+
+
+        /// <summary>
+        /// Set Benchmark
+        /// </summary>
+        /// <param name="symbol">symbol to use as the benchmark</param>
+        /// <remarks>Overload to accept symbol without passing SecurityType. If symbol is in portfolio it will use that SecurityType, otherwise will default to SecurityType.Equity</remarks>
+        /// 
+        public void SetBenchmark(String symbol)
+        {
+            SetBenchmark(Portfolio.ContainsKey(symbol) ? Portfolio[symbol].Type : SecurityType.Equity,symbol);
+        }
+
 
         /// <summary>
         /// Benchmark
