@@ -19,7 +19,7 @@ Lean drives the web based backtesting platform [QuantConnect][4].
 Lean outsourced key infrastructure management to plugins. The most important plugins are:
 
  - **Result Processing**
-   > Handle all messages from the algorithmic trading engine. Decide what should be sent, and where the messages should go. The result processing system can send messages to a local GUI, or the web interface.
+   > Handle all messages from the algorithmic trading engine. Decide what should be sent, and where the messages should go. The result processing system can send messages to a local GUI or the web interface.
 
  - **Datafeed Sourcing**
    > Connect and download data required for the algorithmic trading engine. For backtesting this sources files from the disk, for live trading it connects to a stream and generates the data objects.
